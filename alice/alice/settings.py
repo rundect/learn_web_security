@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_registration'
+    'django_registration',
+    'alice',
+    'profile_info'
 ]
 
 MIDDLEWARE = [
@@ -126,3 +128,4 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_ACTIVATION_DAYS = 3
+LOGOUT_REDIRECT_URL = '/accounts/login/'

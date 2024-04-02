@@ -1,4 +1,6 @@
-notebook==7.1.2
 cryptography==42.0.5
 Django==5.0.3
-request
+django-registration==3.4
+gunicorn==21.2.0
+notebook==7.1.2
+requests==2.31.0
