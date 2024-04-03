@@ -31,6 +31,7 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_SAMESITE = "Lax"
 
 # Application definition
 
@@ -43,11 +44,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_registration',
     'alice',
-    'profile_info'
+    'profile_info',
+    'messaging',
+    'oauth2_provider',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'csp.middleware.CSPMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,7 +63,24 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+OAUTH2_PROVIDER = {
+    'SCOPES': {
+        'email': 'Your email',
+        'name': 'Your name',
+    },
+    'ALLOWED_REDIRECT_URI_SCHEMES': ['https'],
+    'AUTHORIZATION_CODE_EXPIRE_SECONDS': 10,
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 36000,
+}
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'oauth2_provider.backends.OAuth2Backend',
+]
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_INCLUDE_NONCE_IN = ['script-src', 'style-src', ]
+CSP_UPGRADE_INSECURE_REQUESTS = True
 ROOT_URLCONF = 'alice.urls'
 
 TEMPLATES = [

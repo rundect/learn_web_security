@@ -18,4 +18,4 @@ class PassphraseValidator:
             raise ValidationError(too_short, code='too_short')
         if not all(token in self.words for token in tokens):
             not_passphrase = _('This password is not a passphrase.')
-        raise ValidationError(not_passphrase, code='not_passphrase')
+            raise ValidationError(not_passphrase, code='not_passphrase')
